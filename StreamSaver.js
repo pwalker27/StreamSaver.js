@@ -274,6 +274,10 @@
       close () {
         if (useBlobFallback) {
           const blob = new Blob(chunks, { type: 'application/octet-stream; charset=utf-8' })
+		  if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+			  window.navigator.msSaveOrOpenBlob(blob, filename)
+			  return
+      	  } 
           const link = document.createElement('a')
           link.href = URL.createObjectURL(blob)
           link.download = filename
